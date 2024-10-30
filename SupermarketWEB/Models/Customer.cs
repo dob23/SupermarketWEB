@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SupermarketWEB.Models
 {
-    public class Customers
+    public class Customer
     {
         [Key]
         public int Id { get; set; }
