@@ -5,7 +5,7 @@ namespace SupermarketWEB.Models
 {
     public class User
     {
-        public int Iid { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
