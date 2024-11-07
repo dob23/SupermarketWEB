@@ -1,0 +1,26 @@
+﻿@page
+@model Autenticacion.Pages.Account.LoginModel
+@using Autenticacion.Model
+
+<h2>Login</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" asp-for="User.Username" id="username" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" asp-for="User.Password" id="password" required>
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+        <label class="form-check-label" for="rememberMe">Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    <div class="mt-3">
+        <span>Don't have an account? </span>
+        <a asp-page="/Account/Register" class="btn btn-link">Register</a>
+    </div>
+</form>
