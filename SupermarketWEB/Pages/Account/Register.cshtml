@@ -1,0 +1,19 @@
+﻿@page
+@model Autenticacion.Pages.Account.RegisterModel
+
+
+<h2>Register</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" asp-for="User.Username" id="username" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" asp-for="User.PasswordInput" id="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<p>¿Ya tienes una cuenta? <a asp-page="/Account/Login">Iniciar sesión</a></p>
