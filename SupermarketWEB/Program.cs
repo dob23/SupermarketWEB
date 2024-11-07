@@ -12,17 +12,24 @@ namespace SupermarketWEB
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            //Agregando el contexto a SupermarketContext a la aplicacion
+            // Configurar autenticación con cookies
+            builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
+            {
+                options.Cookie.Name = "MyCookieAuth";
+                options.LoginPath = "/Account/Login";
+            });
+
+            // Agregando el contexto de base de datos
             builder.Services.AddDbContext<SupermarketContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SupermarketDB"))
-                );
+            );
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -31,6 +38,8 @@ namespace SupermarketWEB
 
             app.UseRouting();
 
+            // Agregar autenticación y autorización
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapRazorPages();
