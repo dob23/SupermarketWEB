@@ -10,14 +10,20 @@ namespace SupermarketWEB
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages(options =>
+            {
+                // Permite acceso sin autenticación a las páginas de Login y Register
+                options.Conventions.AllowAnonymousToPage("/Account/Login");
+                options.Conventions.AllowAnonymousToPage("/Account/Register");
+            });
 
             // Configurar autenticación con cookies
-            builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
-            {
-                options.Cookie.Name = "MyCookieAuth";
-                options.LoginPath = "/Account/Login";
-            });
+            builder.Services.AddAuthentication("MyCookieAuth")
+                .AddCookie("MyCookieAuth", options =>
+                {
+                    options.Cookie.Name = "MyCookieAuth";
+                    options.LoginPath = "/Account/Login";
+                });
 
             // Agregando el contexto de base de datos
             builder.Services.AddDbContext<SupermarketContext>(options =>

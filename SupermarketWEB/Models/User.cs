@@ -12,7 +12,7 @@ namespace SupermarketWEB.Models
         public string Username { get; set; }
 
         [Required]
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
 
         [NotMapped]
         public string PasswordInput { get; set; }

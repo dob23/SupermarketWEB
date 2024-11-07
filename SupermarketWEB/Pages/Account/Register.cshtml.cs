@@ -29,11 +29,15 @@ namespace Autenticacion.Pages.Account
                 return Page();
             }
 
+           
             using (var sha256 = SHA256.Create())
             {
-                User.Password = sha256.ComputeHash(Encoding.UTF8.GetBytes(User.PasswordInput));
+                var passwordHashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(User.PasswordInput));
+                var passwordHashString = Convert.ToBase64String(passwordHashBytes); 
+                User.Password = passwordHashString; 
             }
 
+            
             _context.Users.Add(User);
             await _context.SaveChangesAsync();
 

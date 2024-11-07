@@ -38,13 +38,14 @@ namespace Autenticacion.Pages.Account
                 return Page();
             }
 
-            // Generar el hash de la contraseña ingresada
+            
             using (var sha256 = SHA256.Create())
             {
-                var passwordHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(User.PasswordInput));
+                var passwordHashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(User.PasswordInput));
+                var passwordHashString = Convert.ToBase64String(passwordHashBytes);
 
-                // Comparar los hashes
-                if (!passwordHash.SequenceEqual(storedUser.Password))
+                
+                if (passwordHashString != storedUser.Password)
                 {
                     ModelState.AddModelError(string.Empty, "Nombre de usuario o contraseña incorrectos.");
                     return Page();
@@ -55,19 +56,19 @@ namespace Autenticacion.Pages.Account
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, storedUser.Username),
-                // Puedes agregar otros claims si es necesario
             };
             var identity = new ClaimsIdentity(claims, "MyCookieAuth");
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
 
-            return RedirectToPage("/Index"); // Redirigir a la página principal
+           
+            return RedirectToPage("/Index");
         }
 
-        // Método para redirigir al formulario de registro
+        
         public IActionResult OnPostRegister()
         {
-            return RedirectToPage("/Account/Register"); // Redirige a la página de registro
+            return RedirectToPage("/Account/Register");
         }
     }
 }
