@@ -29,15 +29,15 @@ namespace Autenticacion.Pages.Account
                 return Page();
             }
 
-           
+            // Crear el hash de la contraseña ingresada por el usuario
             using (var sha256 = SHA256.Create())
             {
                 var passwordHashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(User.PasswordInput));
-                var passwordHashString = Convert.ToBase64String(passwordHashBytes); 
-                User.Password = passwordHashString; 
+                var passwordHashString = Convert.ToBase64String(passwordHashBytes); // Convertir el hash a Base64
+                User.Password = passwordHashString; // Asignar el hash a Password
             }
 
-            
+            // Agregar el usuario a la base de datos
             _context.Users.Add(User);
             await _context.SaveChangesAsync();
 
